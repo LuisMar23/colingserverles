@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Coling.API.Afiliados.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240313214238_primera")]
+    [Migration("20240325220215_primera")]
     partial class primera
     {
         /// <inheritdoc />
@@ -58,6 +58,32 @@ namespace Coling.API.Afiliados.Migrations
                     b.HasIndex("PersonaId");
 
                     b.ToTable("Afiliado");
+                });
+
+            modelBuilder.Entity("Coling.Shared.AfiliadoIdioma", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<int>("AfiliadoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdiomaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MyProperty")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("AfiliadoId");
+
+                    b.HasIndex("IdiomaId");
+
+                    b.ToTable("AfiliadoIdioma");
                 });
 
             modelBuilder.Entity("Coling.Shared.Direccion", b =>
@@ -106,6 +132,27 @@ namespace Coling.API.Afiliados.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Grados");
+                });
+
+            modelBuilder.Entity("Coling.Shared.Idioma", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nombreidioma")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Idioma");
                 });
 
             modelBuilder.Entity("Coling.Shared.Persona", b =>
@@ -283,6 +330,25 @@ namespace Coling.API.Afiliados.Migrations
                         .IsRequired();
 
                     b.Navigation("Persona");
+                });
+
+            modelBuilder.Entity("Coling.Shared.AfiliadoIdioma", b =>
+                {
+                    b.HasOne("Coling.Shared.Afiliado", "Afiliado")
+                        .WithMany()
+                        .HasForeignKey("AfiliadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Coling.Shared.Idioma", "Idioma")
+                        .WithMany()
+                        .HasForeignKey("IdiomaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Afiliado");
+
+                    b.Navigation("Idioma");
                 });
 
             modelBuilder.Entity("Coling.Shared.Direccion", b =>

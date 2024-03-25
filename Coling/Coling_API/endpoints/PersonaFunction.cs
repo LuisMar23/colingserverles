@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +30,15 @@ namespace Coling.API.Afiliados.endpoints
             this.logger = logger;
             this.personaLogic = personaLogic;
         }
-        [Function("PersonaFunction")]
-        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route= "listarpersonas")]HttpRequestData req)
+        [Function("listarpersonas")]
+
+        [OpenApiOperation("Listarspec", "listarpersonas", Description = "Sirve para listar las Personas ")]
+        [OpenApiRequestBody("application/json", typeof(Persona),
+           Description = "Persona modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(Persona),
+            Description = "listara  las Personas ")]
+        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route= "listarpersonas")]HttpRequestData req)
         {
             logger.LogInformation("ejecuatnado");
             var listapersonas=personaLogic.ListarPersonaTodos();
@@ -38,7 +47,14 @@ namespace Coling.API.Afiliados.endpoints
             return respuesta;
         }
         [Function("Insertarpersona")]
-        public async Task<HttpResponseData> InsertarPersona([HttpTrigger(AuthorizationLevel.Function, "post", Route = "insertarpersona")] HttpRequestData req)
+ 
+        [OpenApiOperation("Listarspec", "Insertarpersona", Description = "Sirve para insertar un Persona ")]
+        [OpenApiRequestBody("application/json", typeof(Persona),
+           Description = "Persona modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(Persona),
+            Description = "insertara un Persona ")]
+        public async Task<HttpResponseData> InsertarPersona([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "insertarpersona")] HttpRequestData req)
         {
             logger.LogInformation("ejecutando para insertar personas");
             try
@@ -62,7 +78,14 @@ namespace Coling.API.Afiliados.endpoints
     
 
         [Function("modificarpersona")]
-        public async Task<HttpResponseData> ModificarPersona([HttpTrigger(AuthorizationLevel.Function, "put", Route = "modificarpersona/{id}")] HttpRequestData req,int id)
+        [OpenApiParameter("id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "ID del Persona")]
+        [OpenApiOperation("Listarspec", "modificarpersona", Description = "Sirve para modificar un Persona ")]
+        [OpenApiRequestBody("application/json", typeof(Persona),
+           Description = "Persona modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(Persona),
+            Description = "modificara una Persona ")]
+        public async Task<HttpResponseData> ModificarPersona([HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "modificarpersona/{id}")] HttpRequestData req,int id)
         {
             try
             {
@@ -85,6 +108,13 @@ namespace Coling.API.Afiliados.endpoints
         
       
         [Function("eliminarpersona")]
+        [OpenApiParameter("id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "ID del Persona")]
+        [OpenApiOperation("Listarspec", "eliminarpersona", Description = "Sirve para eliminar un Persona ")]
+        [OpenApiRequestBody("application/json", typeof(Persona),
+           Description = "Persona modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(Persona),
+            Description = "eliminara un Persona ")]
         public async Task<HttpResponseData> EliminarPersona( [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "eliminarpersona/{id}")] HttpRequestData req,int id)
         {
             try
@@ -106,6 +136,13 @@ namespace Coling.API.Afiliados.endpoints
         }
 
         [Function("seleccionarpersona")]
+        [OpenApiParameter("id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "ID del Persona")]
+        [OpenApiOperation("Listarspec", "seleccionarPersona", Description = "Sirve para seleccionar un Persona ")]
+        [OpenApiRequestBody("application/json", typeof(Persona),
+           Description = "Persona modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(Persona),
+            Description = "seleccionara un Persona ")]
         public async Task<HttpResponseData> SeleccionarPersona([HttpTrigger(AuthorizationLevel.Function, "get", Route = "seleccionarpersona/{id}")] HttpRequestData req,int id)
         {
 

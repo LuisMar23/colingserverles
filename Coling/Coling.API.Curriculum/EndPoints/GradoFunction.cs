@@ -9,6 +9,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+using Microsoft.OpenApi.Models;
 
 namespace Coling.API.Curriculum.EndPoints
 {
@@ -23,7 +25,13 @@ namespace Coling.API.Curriculum.EndPoints
             this.repos = repos;
         }
         [Function("InsertarGrado")]
-        public async Task<HttpResponseData> InsertarGrado([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestData req)
+        [OpenApiOperation("Listarspec", "InsertarGrado", Description = "Sirve para insertar un grado")]
+        [OpenApiRequestBody("application/json", typeof(Grado),
+           Description = "Grado modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(Grado),
+            Description = "Insertara un grado ")]
+        public async Task<HttpResponseData> InsertarGrado([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData req)
         {
             HttpResponseData respuetsa;
             try
@@ -52,7 +60,13 @@ namespace Coling.API.Curriculum.EndPoints
             }
         }
         [Function("ListarGrado")]
-        public async Task<HttpResponseData> ListarGrado([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequestData req)
+        [OpenApiOperation("Listarspec", "ListarGrado", Description = "Sirve para listar los grados")]
+        [OpenApiRequestBody("application/json", typeof(Grado),
+           Description = "Grado modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(Grado),
+            Description = "Listara los grado ")]
+        public async Task<HttpResponseData> ListarGrado([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
         {
             HttpResponseData respuetsa;
             try
@@ -70,7 +84,14 @@ namespace Coling.API.Curriculum.EndPoints
             }
         }
         [Function("obtenerGrado")]
-        public async Task<HttpResponseData> ObtenerGrado([HttpTrigger(AuthorizationLevel.Function, "get", Route = "obtenerGrado/{id}")] HttpRequestData req, string id)
+        [OpenApiParameter("id", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "ID de Grado")]
+        [OpenApiOperation("Listarspec", "obtenerGrado", Description = "Sirve para obtener un grado")]
+        [OpenApiRequestBody("application/json", typeof(Grado),
+           Description = "Grado modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(Grado),
+            Description = "Obtendra un grado ")]
+        public async Task<HttpResponseData> ObtenerGrado([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "obtenerGrado/{id}")] HttpRequestData req, string id)
         {
             HttpResponseData respuetsa;
             try
@@ -89,8 +110,15 @@ namespace Coling.API.Curriculum.EndPoints
         }
 
         [Function("ModificarGrado")]
+        [OpenApiParameter("id", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "ID de Grado")]
+        [OpenApiOperation("Listarspec", "ModificarGrado", Description = "Sirve para modificar un grado")]
+        [OpenApiRequestBody("application/json", typeof(Grado),
+           Description = "Grado modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(Grado),
+            Description = "Modificara un grado ")]
         public async Task<HttpResponseData> ModificarGrado(
-            [HttpTrigger(AuthorizationLevel.Function, "put", Route = "modificarGrado/{id}")] HttpRequestData req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "modificarGrado/{id}")] HttpRequestData req,
             string id)
         {
             HttpResponseData respuesta;
@@ -129,8 +157,16 @@ namespace Coling.API.Curriculum.EndPoints
         }
 
         [Function("EliminarGrado")]
+        [OpenApiParameter("partitionKey", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Partition Key de Grado")]
+        [OpenApiParameter("rowKey", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Row Key de Grado")]
+        [OpenApiOperation("Listarspec", "EliminarGrado", Description = "Sirve para eliminar un grado")]
+        [OpenApiRequestBody("application/json", typeof(Grado),
+           Description = "Grado modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(Grado),
+            Description = "Eliminara un grado ")]
         public async Task<HttpResponseData> EliminarGrado(
-            [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "Grado/{partitionKey}/{rowKey}")] HttpRequestData req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "Grado/{partitionKey}/{rowKey}")] HttpRequestData req,
             string partitionKey,
             string rowKey)
         {

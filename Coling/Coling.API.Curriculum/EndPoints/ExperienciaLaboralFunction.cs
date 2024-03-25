@@ -9,6 +9,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+using Microsoft.OpenApi.Models;
 
 namespace Coling.API.Curriculum.EndPoints
 {
@@ -23,6 +25,12 @@ namespace Coling.API.Curriculum.EndPoints
             this.repos = repos;
         }
         [Function("InsertarExperienciaLaboral")]
+        [OpenApiOperation("Listarspec", "InsertarExperienciaLaboral", Description = "Sirve para insertar la experiencia laboral")]
+        [OpenApiRequestBody("application/json", typeof(ExperienciaLaboral),
+           Description = "Experiencia laboral modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(ExperienciaLaboral),
+            Description = "Insertar la experiencia laboral")]
         public async Task<HttpResponseData> InsertarExperienciaLaboral([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestData req)
         {
             HttpResponseData respuetsa;
@@ -52,6 +60,12 @@ namespace Coling.API.Curriculum.EndPoints
             }
         }
         [Function("ListarExperienciaLaboral")]
+        [OpenApiOperation("Listarspec", "ListarExperienciaLaboral", Description = "Sirve para listar la experiencia laboral")]
+        [OpenApiRequestBody("application/json", typeof(ExperienciaLaboral),
+           Description = "Experiencia laboral modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(ExperienciaLaboral),
+            Description = "Listara la experiencia laboral")]
         public async Task<HttpResponseData> ListarExperienciaLaboral([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequestData req)
         {
             HttpResponseData respuetsa;
@@ -70,6 +84,13 @@ namespace Coling.API.Curriculum.EndPoints
             }
         }
         [Function("obtenerExperienciaLaboral")]
+        [OpenApiParameter("id", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "ID de Experiencia Laboral")]
+        [OpenApiOperation("Listarspec", "obtenerExperienciaLaboral", Description = "Sirve para obtener la experiencia laboral")]
+        [OpenApiRequestBody("application/json", typeof(ExperienciaLaboral),
+           Description = "Experiencia laboral modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(ExperienciaLaboral),
+            Description = "Obtendra la experiencia laboral")]
         public async Task<HttpResponseData> ObtenerExperienciaLaboral([HttpTrigger(AuthorizationLevel.Function, "get", Route = "obtenerExperienciaLaboral/{id}")] HttpRequestData req, string id)
         {
             HttpResponseData respuetsa;
@@ -89,6 +110,13 @@ namespace Coling.API.Curriculum.EndPoints
         }
 
         [Function("ModificarExperienciaLaboral")]
+        [OpenApiParameter("id", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "ID de Experiencia Laboral")]
+        [OpenApiOperation("Listarspec", "ModificarExperienciaLaboral", Description = "Sirve para modificar la experiencia laboral")]
+        [OpenApiRequestBody("application/json", typeof(ExperienciaLaboral),
+           Description = "Experiencia laboral modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(ExperienciaLaboral),
+            Description = "Modificara la experiencia laboral")]
         public async Task<HttpResponseData> ModificarExperienciaLaboral(
             [HttpTrigger(AuthorizationLevel.Function, "put", Route = "modificarExperienciaLaboral/{id}")] HttpRequestData req,
             string id)
@@ -132,6 +160,14 @@ namespace Coling.API.Curriculum.EndPoints
         }
 
         [Function("EliminarExperienciaLaboral")]
+        [OpenApiParameter("partitionKey", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Partition Key de Experiencia Laboral")]
+        [OpenApiParameter("rowKey", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Row Key de Experiencia Laboral")]
+        [OpenApiOperation("Listarspec", "EliminarExperienciaLaboral", Description = "Sirve para eliminar la experiencia laboral")]
+        [OpenApiRequestBody("application/json", typeof(ExperienciaLaboral),
+           Description = "Experiencia laboral modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(ExperienciaLaboral),
+            Description = "Eliminara la experiencia laboral")]
         public async Task<HttpResponseData> EliminarExperienciaLaboral(
             [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "ExperienciaLaborales/{partitionKey}/{rowKey}")] HttpRequestData req,
             string partitionKey,
