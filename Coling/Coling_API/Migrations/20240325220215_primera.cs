@@ -26,6 +26,20 @@ namespace Coling.API.Afiliados.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Idioma",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nombreidioma = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    estado = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Idioma", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Personas",
                 columns: table => new
                 {
@@ -171,6 +185,33 @@ namespace Coling.API.Afiliados.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AfiliadoIdioma",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MyProperty = table.Column<int>(type: "int", nullable: false),
+                    AfiliadoId = table.Column<int>(type: "int", nullable: false),
+                    IdiomaId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AfiliadoIdioma", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_AfiliadoIdioma_Afiliado_AfiliadoId",
+                        column: x => x.AfiliadoId,
+                        principalTable: "Afiliado",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AfiliadoIdioma_Idioma_IdiomaId",
+                        column: x => x.IdiomaId,
+                        principalTable: "Idioma",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "profesionAfiliados",
                 columns: table => new
                 {
@@ -203,6 +244,16 @@ namespace Coling.API.Afiliados.Migrations
                 name: "IX_Afiliado_PersonaId",
                 table: "Afiliado",
                 column: "PersonaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AfiliadoIdioma_AfiliadoId",
+                table: "AfiliadoIdioma",
+                column: "AfiliadoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AfiliadoIdioma_IdiomaId",
+                table: "AfiliadoIdioma",
+                column: "IdiomaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Direcciones_PersonaId",
@@ -244,6 +295,9 @@ namespace Coling.API.Afiliados.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AfiliadoIdioma");
+
+            migrationBuilder.DropTable(
                 name: "Direcciones");
 
             migrationBuilder.DropTable(
@@ -254,6 +308,9 @@ namespace Coling.API.Afiliados.Migrations
 
             migrationBuilder.DropTable(
                 name: "Telefono");
+
+            migrationBuilder.DropTable(
+                name: "Idioma");
 
             migrationBuilder.DropTable(
                 name: "TipoSociales");

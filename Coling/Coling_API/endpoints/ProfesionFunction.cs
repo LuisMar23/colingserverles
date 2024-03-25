@@ -9,6 +9,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Coling.API.Afiliados.Contratos;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+using Microsoft.OpenApi.Models;
 
 namespace Coling.API.Afiliados.endpoints
 {
@@ -23,7 +25,14 @@ namespace Coling.API.Afiliados.endpoints
             this.ProfesionLogic = ProfesionLogic;
         }
         [Function("listarProfesions")]
-        public async Task<HttpResponseData> ListaProfesions([HttpTrigger(AuthorizationLevel.Function, "get", Route = "listarProfesions")] HttpRequestData req)
+
+        [OpenApiOperation("Listarspec", "listarProfesions", Description = "Sirve para listar las Profesiones ")]
+        [OpenApiRequestBody("application/json", typeof(Profesion),
+           Description = "Profesion modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(Profesion),
+            Description = "listara las Profesiones ")]
+        public async Task<HttpResponseData> ListaProfesions([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "listarProfesions")] HttpRequestData req)
         {
             logger.LogInformation("ejecuatnado");
             var listaProfesiones = ProfesionLogic.ListarProfesionesTodos();
@@ -32,7 +41,14 @@ namespace Coling.API.Afiliados.endpoints
             return respuesta;
         }
         [Function("InsertarProfesion")]
-        public async Task<HttpResponseData> InsertarProfesion([HttpTrigger(AuthorizationLevel.Function, "post", Route = "insertarProfesion")] HttpRequestData req)
+
+        [OpenApiOperation("Listarspec", "InsertarProfesion", Description = "Sirve para insertar una Profesion ")]
+        [OpenApiRequestBody("application/json", typeof(Profesion),
+           Description = "Profesion modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(Profesion),
+            Description = "insertara una Profesion ")]
+        public async Task<HttpResponseData> InsertarProfesion([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "insertarProfesion")] HttpRequestData req)
         {
             logger.LogInformation("ejecutando para insertar Profesions");
             try
@@ -57,7 +73,14 @@ namespace Coling.API.Afiliados.endpoints
 
 
         [Function("modificarProfesion")]
-        public async Task<HttpResponseData> ModificarProfesion([HttpTrigger(AuthorizationLevel.Function, "put", Route = "modificarProfesion/{id}")] HttpRequestData req, int id)
+        [OpenApiParameter("id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "ID del Profesion")]
+        [OpenApiOperation("Listarspec", "modificarProfesion", Description = "Sirve para modificar una Profesion ")]
+        [OpenApiRequestBody("application/json", typeof(Profesion),
+           Description = "Profesion modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(Profesion),
+            Description = "modificara una Profesion ")]
+        public async Task<HttpResponseData> ModificarProfesion([HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "modificarProfesion/{id}")] HttpRequestData req, int id)
         {
             try
             {
@@ -80,7 +103,14 @@ namespace Coling.API.Afiliados.endpoints
 
 
         [Function("eliminarProfesion")]
-        public async Task<HttpResponseData> EliminarProfesion([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "eliminarProfesion/{id}")] HttpRequestData req, int id)
+        [OpenApiParameter("id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "ID del Profesion")]
+        [OpenApiOperation("Listarspec", "eliminarProfesion", Description = "Sirve para eliminar una Profesion ")]
+        [OpenApiRequestBody("application/json", typeof(Profesion),
+           Description = "Profesion modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(Profesion),
+            Description = "eliminara una Profesion ")]
+        public async Task<HttpResponseData> EliminarProfesion([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "eliminarProfesion/{id}")] HttpRequestData req, int id)
         {
             try
             {
@@ -101,7 +131,14 @@ namespace Coling.API.Afiliados.endpoints
         }
 
         [Function("seleccionarProfesion")]
-        public async Task<HttpResponseData> SeleccionarProfesion([HttpTrigger(AuthorizationLevel.Function, "get", Route = "seleccionarProfesion/{id}")] HttpRequestData req,int id)
+        [OpenApiParameter("id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "ID del Profesion")]
+        [OpenApiOperation("Listarspec", "seleccionarProfesion", Description = "Sirve para seleccionar una Profesion ")]
+        [OpenApiRequestBody("application/json", typeof(Profesion),
+           Description = "Profesion modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(Profesion),
+            Description = "seleccionara una Profesion ")]
+        public async Task<HttpResponseData> SeleccionarProfesion([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "seleccionarProfesion/{id}")] HttpRequestData req,int id)
         {
 
             logger.LogInformation("Ejecutando para seleccionar una profesion");

@@ -2,7 +2,9 @@
 using Coling.Shared;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +25,14 @@ namespace Coling.API.Afiliados.endpoints
             this.ProfesionAfiliadoLogic = ProfesionAfiliadoLogic;
         }
         [Function("listarProfesionAfiliados")]
-        public async Task<HttpResponseData> ListaProfesionAfiliados([HttpTrigger(AuthorizationLevel.Function, "get", Route = "listarProfesionAfiliados")] HttpRequestData req)
+
+        [OpenApiOperation("Listarspec", "listarProfesionAfiliados", Description = "Sirve para listar las ProfesionAfiliado ")]
+        [OpenApiRequestBody("application/json", typeof(ProfesionAfiliado),
+           Description = "ProfesionAfiliado modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(ProfesionAfiliado),
+            Description = "listara ProfesionAfiliado ")]
+        public async Task<HttpResponseData> ListaProfesionAfiliados([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "listarProfesionAfiliados")] HttpRequestData req)
         {
             logger.LogInformation("ejecuatnado");
             var listaProfesionAfiliadoes = ProfesionAfiliadoLogic.ListarProfesionesAfiliadosTodos();
@@ -32,7 +41,14 @@ namespace Coling.API.Afiliados.endpoints
             return respuesta;
         }
         [Function("InsertarProfesionAfiliado")]
-        public async Task<HttpResponseData> InsertarProfesionAfiliado([HttpTrigger(AuthorizationLevel.Function, "post", Route = "insertarProfesionAfiliado")] HttpRequestData req)
+   
+        [OpenApiOperation("Listarspec", "InsertarProfesionAfiliado", Description = "Sirve para insertar una ProfesionAfiliado ")]
+        [OpenApiRequestBody("application/json", typeof(ProfesionAfiliado),
+           Description = "ProfesionAfiliado modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(ProfesionAfiliado),
+            Description = "insertara una ProfesionAfiliado ")]
+        public async Task<HttpResponseData> InsertarProfesionAfiliado([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "insertarProfesionAfiliado")] HttpRequestData req)
         {
             logger.LogInformation("ejecutando para insertar ProfesionAfiliados");
             try
@@ -57,7 +73,14 @@ namespace Coling.API.Afiliados.endpoints
 
 
         [Function("modificarProfesionAfiliado")]
-        public async Task<HttpResponseData> ModificarProfesionAfiliado([HttpTrigger(AuthorizationLevel.Function, "put", Route = "modificarProfesionAfiliado/{id}")] HttpRequestData req, int id)
+        [OpenApiParameter("id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "ID del ProfesionAfiliado")]
+        [OpenApiOperation("Listarspec", "modificarProfesionAfiliado", Description = "Sirve para modificar una ProfesionAfiliado ")]
+        [OpenApiRequestBody("application/json", typeof(ProfesionAfiliado),
+           Description = "ProfesionAfiliado modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(ProfesionAfiliado),
+            Description = "modificara una ProfesionAfiliado ")]
+        public async Task<HttpResponseData> ModificarProfesionAfiliado([HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "modificarProfesionAfiliado/{id}")] HttpRequestData req, int id)
         {
             try
             {
@@ -80,7 +103,14 @@ namespace Coling.API.Afiliados.endpoints
 
 
         [Function("eliminarProfesionAfiliado")]
-        public async Task<HttpResponseData> EliminarProfesionAfiliado([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "eliminarProfesionAfiliado/{id}")] HttpRequestData req, int id)
+        [OpenApiParameter("id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "ID del ProfesionAfiliado")]
+        [OpenApiOperation("Listarspec", "eliminarProfesionAfiliado", Description = "Sirve para eliminar una ProfesionAfiliado ")]
+        [OpenApiRequestBody("application/json", typeof(ProfesionAfiliado),
+           Description = "ProfesionAfiliado modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(ProfesionAfiliado),
+            Description = "eliminara una ProfesionAfiliado ")]
+        public async Task<HttpResponseData> EliminarProfesionAfiliado([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "eliminarProfesionAfiliado/{id}")] HttpRequestData req, int id)
         {
             try
             {
@@ -101,7 +131,14 @@ namespace Coling.API.Afiliados.endpoints
         }
 
         [Function("seleccionarProfesionAfiliado")]
-        public async Task<HttpResponseData> SeleccionarProfesionAfiliado([HttpTrigger(AuthorizationLevel.Function, "get", Route = "seleccionarProfesionAfiliado/{id}")] HttpRequestData req,int id)
+        [OpenApiParameter("id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "ID del ProfesionAfiliado")]
+        [OpenApiOperation("Listarspec", "seleccionarProfesionAfiliado", Description = "Sirve para seleccionar una ProfesionAfiliado ")]
+        [OpenApiRequestBody("application/json", typeof(ProfesionAfiliado),
+           Description = "ProfesionAfiliado modelo")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json",
+            bodyType: typeof(ProfesionAfiliado),
+            Description = "seleccionara una ProfesionAfiliado ")]
+        public async Task<HttpResponseData> SeleccionarProfesionAfiliado([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "seleccionarProfesionAfiliado/{id}")] HttpRequestData req,int id)
         {
 
             logger.LogInformation("Ejecutando para seleccionar una profesion del afiliado");

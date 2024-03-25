@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Coling.Autentificacion": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7080",
+      "environmentVariables": {
+        "LlaveSecreta": "Dfsade1323dasdd1easdsjoffdsfsdfsdrewrfsdfsdfjoJO123"
+      }
+    }
+  }
+}
