@@ -32,7 +32,7 @@ namespace Coling.Repositorio.Implementacion
             };
             var SecretKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(configuration["LLaveSecreta"]??""));
             var cre=new SigningCredentials(SecretKey,SecurityAlgorithms.HmacSha256);
-            var expires=DateTime.UtcNow.AddMinutes(1);
+            var expires=DateTime.UtcNow.AddMinutes(5);
             var tokenSeguirdad = new JwtSecurityToken(issuer: null, audience: null, claims: claims, expires: expires, signingCredentials: cre);
      
             TokenData respuestaToken=new TokenData();

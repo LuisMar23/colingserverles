@@ -3,7 +3,9 @@
     "Coling_API": {
       "commandName": "Project",
       "commandLineArgs": "--port 7157",
-      "launchBrowser": false
+      "environmentVariables": {
+        "LlaveSecreta": "Dfsade1323dasdd1easdsjoffdsfsdfsdrewrfsdfsdfjoJO123"
+      }
     }
   }
 }

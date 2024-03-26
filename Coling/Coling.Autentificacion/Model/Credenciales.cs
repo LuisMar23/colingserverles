@@ -8,8 +8,8 @@ namespace Coling.Autentificacion.Model
 {
     public class Credenciales
     {
-        public string UserName { get; set; }
-        public string Password { get; set; }    
+        public string? UserName { get; set; }
+        public string? Password { get; set; }    
         public bool RefrescarToken {  get; set; }
     }
 }
