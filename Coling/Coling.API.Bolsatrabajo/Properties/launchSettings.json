@@ -3,7 +3,9 @@
     "Coling.API.Bolsatrabajo": {
       "commandName": "Project",
       "commandLineArgs": "--port 7018",
-      "launchBrowser": false
+      "environmentVariables": {
+        "LlaveSecreta": "Dfsade1323dasdd1easdsjoffdsfsdfsdrewrfsdfsdfjoJO123"
+      }
     }
   }
 }
